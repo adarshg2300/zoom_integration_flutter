@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:zoom_sdk_flutter/presentation/bloc/language_change_bloc.dart';
+import '../../../main.dart';
 import '../../../res/assets/image_assets.dart';
 import '../../../res/component/comman_widget.dart';
 
@@ -24,7 +26,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
 
   // Variable to store the selected language
   late String selectedLanguage;
-
+  final bloc = getIt<LanguageChangeBloc>();
   @override
   void initState() {
     super.initState();
@@ -33,12 +35,17 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   }
 
   // Method to handle button press and show toast
-  void _showToast() {
-    CommonWidgets.showToast('Selected language: $selectedLanguage');
+  void _goTutorial() {
+    bloc.navigateToTutorial();
   }
 
   @override
   Widget build(BuildContext context) {
+    bloc.navigateToTutorial1.listen((navigate) {
+      if (navigate) {
+        Navigator.pushReplacementNamed(context, '/tutorial');
+      }
+    });
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -167,7 +174,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(horizontal: 10),
                 child: CommonWidgets.buildElevatedButton(
-                  onPressed: _showToast,
+                  onPressed:_goTutorial,
                   buttonText: 'Next',
                 ),
               ),

@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import '../../../main.dart';
 import '../../../res/assets/image_assets.dart';
 import '../../../res/component/comman_widget.dart';
 import '../../../res/component/size_confige.dart';
 import '../../../res/strings/strings.dart';
+import '../../bloc/splash_bloc.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+   SplashScreen({super.key});
+  final bloc = getIt<SplashBloc>();
 
   @override
   Widget build(BuildContext context) {
+    bloc.navigateToTutorial.listen((navigate) {
+      if (navigate) {
+        Navigator.pushReplacementNamed(context, '/changeLanguage');
+      }
+    });
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Stack(

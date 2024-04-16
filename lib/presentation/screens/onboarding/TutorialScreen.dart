@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:zoom_sdk_flutter/presentation/bloc/tutorial_bloc.dart';
 import 'package:zoom_sdk_flutter/res/assets/image_assets.dart';
 import 'package:zoom_sdk_flutter/res/component/comman_widget.dart';
+
+import '../../../main.dart';
 
 class TutorialScreen extends StatefulWidget {
   const TutorialScreen({Key? key}) : super(key: key);
@@ -12,7 +15,7 @@ class TutorialScreen extends StatefulWidget {
 
 class _TutorialScreenState extends State<TutorialScreen> {
   int _currentPageIndex = 0;
-
+  final bloc = getIt<TutorialBloc>();
   final List<String> _backgroundImages = [
     ImageAssets.tutorialFirst,
     ImageAssets.tutorialThree,
@@ -21,6 +24,12 @@ class _TutorialScreenState extends State<TutorialScreen> {
 
   @override
   Widget build(BuildContext context) {
+    bloc.navigateToTutorial.listen((navigate) {
+      if (navigate) {
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    });
+
     // List of texts for the first text widget corresponding to each page
     final List<String> _firstTexts = [
       '    Watch Unlimited \n       Shows & Live\n          Podcasts',
@@ -100,6 +109,6 @@ class _TutorialScreenState extends State<TutorialScreen> {
   }
 
   void _getStarted() {
-    // Handle the action for when "Get Started" button is pressed
+    bloc.tutorialBloc();
   }
 }
